@@ -1,31 +1,41 @@
 :root {
-  --default-button-bg: #f5f5f5;
   --primary-text: #343637;
-  --menu-text: #1C1C1C;
   --secondary-bg: #F4F9FC;
-  --button-glow: #458BC1;
+  --dashboard-bg: #F8FCFF;
+  --menu-text: #1C1C1C;
+  --mobile-text: #333333;
+  --mobile-secondary: #666666;
+
   --dark-bg: #003E6E;
   --dark-button: #002847;
+  --button-glow: #458BC1;
   --icon-default: #03314B;
   --icon-active: #0365F2;
+
   --menu-active-bg-start: #E8F1FF;
   --menu-active-bg-end: #F2F7FF;
   --menu-active-border: #D1E3FF;
   --menu-hover-bg: #F1F6F4;
   --menu-hover-border: #E0E9F1;
+
+  --default-button-bg: #f5f5f5;
   --button-line: #E5E7EB;
   --button-icon: #1D1D1D;
-  --mobile-text: #333333;
-  --mobile-secondary: #666666;
+
+  /* 📱 Mobile UI */
   --mobile-hover: #F5F5F5;
   --mobile-footer: #003E6E;
   --mobile-active: #4FBAE9;
-  --dashboard-bg: #F8FCFF;
+
   --danger-color: #FF4D4F;
   --success-color: #52C41A;
   --warning-color: #FAAD14;
   --info-color: #1890FF;
 }
+
+/* ---------------------------------------------------
+   🧱 Base Styles
+   --------------------------------------------------- */
 
 * {
   margin: 0;
@@ -34,3 +44,503 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
 }
+
+body {
+  background-color: var(--dashboard-bg);
+  color: var(--primary-text);
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------
+   🧩 Layout Containers
+   --------------------------------------------------- */
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------
+   🧭 Header Styles
+   --------------------------------------------------- */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* ---------------------------------------------------
+   💬 Tooltip Theme (shadcn/ui override)
+   --------------------------------------------------- */
+
+[data-radix-popper-content-wrapper] > div {
+  background-color: var(--dark-bg) !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid var(--menu-hover-border) !important;
+}
+/* Search and filters section */
+.filters-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.search-container {
+    position: relative;
+    width: 320px;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border: 1px solid var(--button-line);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--primary-text);
+    background-color: white;
+}
+
+.search-container svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--mobile-secondary);
+}
+
+.button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    border: none;
+}
+
+.primary-button {
+    background-color: var(--button-glow);
+    color: white;
+}
+
+.primary-button:hover {
+    background-color: #3A7BAF;
+}
+
+.secondary-button {
+    background-color: var(--default-button-bg);
+    color: var(--icon-default);
+    border: 1px solid var(--button-line);
+}
+
+.secondary-button:hover {
+    background-color: #EBEBEB;
+}
+
+.secondary-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 180px;
+    z-index: 10;
+    display: none;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--primary-text);
+    text-decoration: none;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: var(--secondary-bg);
+}
+
+.dropdown-item svg {
+    width: 16px;
+    height: 16px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: var(--button-line);
+    margin: 6px 0;
+}
+/* Table */
+.users-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+.users-table th {
+  background-color: var(--secondary-bg);
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--icon-default);
+  border-bottom: 1px solid var(--button-line);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.users-table th .tooltip-icon {
+  margin-left: 4px;
+  color: var(--mobile-secondary);
+  cursor: help;
+}
+
+.users-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--button-line);
+  font-size: 14px;
+  color: var(--primary-text);
+  background-color: white;
+  vertical-align: middle;
+}
+
+.users-table tr:hover td {
+  background-color: var(--secondary-bg);
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Checkbox */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--button-line);
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.2s;
+}
+
+.custom-checkbox.checked {
+  background-color: var(--button-glow);
+  border-color: var(--button-glow);
+}
+
+.custom-checkbox.checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-weight: 500;
+}
+
+.user-id {
+  font-size: 12px;
+  color: var(--secondary-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Email */
+.email-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Role/Status pills */
+.role-pill, .status-pill {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.role-instructor { background: #E6F7FF; color: #1890FF; }
+.role-student { background: #E6FFFB; color: #13C2C2; }
+.role-support { background: #F9F0FF; color: #722ED1; }
+.role-admin { background: #FFF7E6; color: #FA8C16; }
+
+.status-active { background: #e6f4ea; color: #2e7d32; }
+.status-pending { background: #e0e4ff; color: #402fa4; }
+.status-suspended { background: #ffebee; color: #c62828; }
+.status-inactive { background: #eceff1; color: #607d8b; }
+
+/* Tags styles */
+        .tags-container {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            max-width: 150px;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            background-color: var(--secondary-bg);
+            color: var(--icon-default);
+            white-space: nowrap;
+        }
+
+        .tag-more {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 500;
+            background-color: var(--button-line);
+            color: var(--icon-default);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag-more:hover {
+            background-color: var(--button-glow);
+            color: white;
+        }
+
+/* View/Linked buttons */
+.view-links {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+/* Table rows */
+table tbody tr {
+    background-color: white;
+    transition: background-color 0.2s;
+}
+
+table tbody tr:hover {
+    background-color: var(--hover-row-bg); /* subtle hover like CodePen */
+}
+
+/* Padding for cells */
+table td {
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+/* For the first checkbox column */
+table td:first-child {
+    text-align: center;
+}
+/* Email cell styling */
+.email-cell {
+    max-width: 200px; /* fixed width for truncation */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.email-cell .email-copy-icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.email-cell:hover .email-copy-icon {
+    opacity: 1;
+}
+
+.email-cell:hover {
+    color: var(--button-glow);
+}
+/* All row icons (view/linked/actions) */
+.view-links svg,
+.options-button svg {
+    width: 16px;  /* smaller than default */
+    height: 16px;
+}
+
+.view-links {
+    gap: 4px; /* reduce spacing between icons */
+}
+
+.actions-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px; /* smaller vertical gap */
+}
+.role-pill,
+.status-pill,
+.tag-pill {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.status-pill {
+    border-radius: 12px; /* keep rounded like CodePen */
+}
+
+.tag-pill {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* IP Info styles */
+        .ip-info {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            cursor: help;
+        }
+
+        .ip-info:hover {
+            color: var(--button-glow);
+        }
+/* View links section */
+        .view-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .view-link {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--secondary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .view-link:hover {
+            transform: translateY(-2px);
+            background-color: #3A7BAF;
+            color: white;
+        }
+
+        .view-link svg {
+            width: 14px;
+            height: 14px;
+            color: var(--icon-default);
+        }
+
+        .view-link:hover svg {
+            color: white;
+        }
+
+        .view-more {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--button-line);
+            color: var(--icon-default);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .view-more:hover {
+            background-color: var(--button-glow);
+            color: white;
+        }
+        
