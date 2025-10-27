@@ -2,16 +2,27 @@
 
 import { useState } from "react";
 import StatCard from "../components/StatCard";
-import CollectionTable from "../components/CollectionTable"; // new table component
-import Pagination from "../components/Pagination"; // <-- import pagination
+import CollectionTable from "../components/CollectionTable";
+import Pagination from "../components/Pagination";
+import CreateCollectionModal from "../components/CreateCollectionModal";
 import { Collection } from "../types/Collection";
 import { FaBox, FaBookmark } from "react-icons/fa";
+
+interface CreateCollectionData {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  type: string;
+  owner: string;
+  visibility: string;
+}
 
 export default function CollectionsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
-  const collections: Collection[] = [
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [collections, setCollections] = useState<Collection[]>([
     {
       id: "C-B3H7K9A2",
       icon: "🎨",
@@ -51,7 +62,7 @@ export default function CollectionsPage() {
       linkedTo: "",
       actions: "",
     },
-  ];
+  ]);
 
   const stats = [
     { title: "Collections Created", value: 1245, icon: <FaBox /> },
@@ -60,37 +71,87 @@ export default function CollectionsPage() {
     { title: "Bookmarks (7 Days)", value: 342, icon: <FaBookmark /> },
   ];
 
+  const handleCreateCollection = (collectionData: CreateCollectionData) => {
+    const newCollection: Collection = {
+      id: collectionData.id,
+      icon: collectionData.icon,
+      title: collectionData.title,
+      type: collectionData.type,
+      owner: collectionData.owner,
+      visibility: collectionData.visibility,
+      created: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      modified: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      count: 0,
+      linkedTo: "",
+      actions: ""
+    };
+    
+    setCollections(prev => [...prev, newCollection]);
+  };
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 bg-[var(--dashboard-bg)] min-h-screen">
       {/* Header + New Collection Button */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Collections</h1>
-        <button className="flex items-center gap-2 px-4 py-2 bg-[var(--button-glow)] text-white rounded-lg hover:bg-[var(--icon-active)]">
-          <span>+</span>
-          <span>New Collection</span>
-        </button>
+      <div className="mb-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold">Collections</h1>
+          <button 
+            className="flex items-center gap-1 px-6 py-2 bg-[var(--button-glow)] text-white rounded-lg hover:bg-[#3A7BAF] transition-colors"
+            onClick={() => setIsCreateModalOpen(true)}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="inline-block"
+            >
+              <path
+                d="M8 3V13M3 8H13"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <span>Create Collection</span>
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, idx) => (
-          <StatCard key={idx} title={stat.title} value={stat.value} icon={stat.icon} />
-        ))}
+      <div className="mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {stats.map((stat, idx) => (
+            <StatCard key={idx} title={stat.title} value={stat.value} icon={stat.icon} />
+          ))}
+        </div>
       </div>
 
       {/* Table with Search & Sort */}
-      <CollectionTable data={collections} />
+      <div className="mb-0">
+        <CollectionTable data={collections} />
+      </div>
 
-      {/* Pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalItems={1245} // replace with actual total if dynamic
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-        onItemsPerPageChange={(count) => {
-          setItemsPerPage(count);
-          setCurrentPage(1);
-        }}
+      {/* Pagination - No gap */}
+      <div className="mt-0">
+        <Pagination
+          currentPage={currentPage}
+          totalItems={122}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={(count) => {
+            setItemsPerPage(count);
+            setCurrentPage(1);
+          }}
+        />
+      </div>
+
+      {/* Create Collection Modal */}
+      <CreateCollectionModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreateCollection}
       />
     </div>
   );

@@ -5,6 +5,7 @@ import StatCard from "../components/StatCard";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
 import { User } from "../types/User";
+import toast, { Toaster } from "react-hot-toast";
 
 import {
   UserIcon,
@@ -69,36 +70,48 @@ export default function UsersPage() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 bg-[var(--dashboard-bg)] min-h-screen">
+      {/* Toaster for notifications */}
+      <Toaster position="top-right" reverseOrder={false} />
+
       {/* Header Section */}
-<div className="flex justify-between items-center mb-6">
-  <h1 className="text-2xl font-semibold text-[var(--primary-text)]">Users</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold text-[var(--primary-text)]">Users</h1>
 
-  <div className="flex gap-3">
-    <button
-      id="newActionBtn"
-      className="flex items-center gap-1 px-4 py-2 bg-[var(--button-glow)] text-white rounded-lg hover:bg-[var(--icon-active)] transition-colors"
-    >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        className="inline-block"
-      >
-        <path
-          d="M8 3V13M3 8H13"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-      New Action
-    </button>
-  </div>
-</div>
-
+        <div className="flex gap-3">
+          <button
+            id="newActionBtn"
+            onClick={() => {
+              toast("New Action functionality would be implemented here", {
+                duration: 2000,
+                style: {
+                  background: "#52C41A",
+                  color: "#fff",
+                  fontSize: "14px",
+                },
+              });
+            }}
+            className="flex items-center gap-1 px-4 py-2 bg-[var(--button-glow)] text-white rounded-lg hover:bg-[#3A7BAF] transition-colors"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="inline-block"
+            >
+              <path
+                d="M8 3V13M3 8H13"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            New Action
+          </button>
+        </div>
+      </div>
 
       {/* Stats Section */}
       <div
@@ -114,7 +127,6 @@ export default function UsersPage() {
           change="+12.3%"
           trend="positive"
           icon={<UserIcon className="h-6 w-6" />}
-          tooltip="Total registered users on the platform."
         />
         <StatCard
           title="Active Users (24h)"
@@ -122,7 +134,6 @@ export default function UsersPage() {
           change="+8.1%"
           trend="positive"
           icon={<EyeIcon className="h-6 w-6" />}
-          tooltip="Users who logged in or interacted in the last 24 hours."
         />
         <StatCard
           title="Instructors"
@@ -130,7 +141,6 @@ export default function UsersPage() {
           change="+15.2%"
           trend="positive"
           icon={<AcademicCapIcon className="h-6 w-6" />}
-          tooltip="Active instructors currently teaching courses."
         />
         <StatCard
           title="Students"
@@ -138,7 +148,6 @@ export default function UsersPage() {
           change="+9.7%"
           trend="positive"
           icon={<UserGroupIcon className="h-6 w-6" />}
-          tooltip="Students currently enrolled in at least one course."
         />
         <StatCard
           title="Suspended Users"
@@ -146,7 +155,6 @@ export default function UsersPage() {
           change="-2.3%"
           trend="negative"
           icon={<ExclamationTriangleIcon className="h-6 w-6" />}
-          tooltip="Accounts temporarily disabled for policy violations."
         />
         <StatCard
           title="Pending Verification"
@@ -154,7 +162,6 @@ export default function UsersPage() {
           change="-0.8%"
           trend="neutral"
           icon={<ClipboardDocumentListIcon className="h-6 w-6" />}
-          tooltip="Users awaiting email or ID verification."
         />
         <StatCard
           title="New Users (7d)"
@@ -162,7 +169,6 @@ export default function UsersPage() {
           change="+18.4%"
           trend="positive"
           icon={<UserIcon className="h-6 w-6" />}
-          tooltip="Users registered in the last 7 days."
         />
         <StatCard
           title="Inactive Users (30d+)"
@@ -170,26 +176,24 @@ export default function UsersPage() {
           change="-5.2%"
           trend="negative"
           icon={<UserIcon className="h-6 w-6" />}
-          tooltip="Users who haven’t logged in for over a month."
         />
       </div>
 
-      {/* Table */}
-      <div className="card bg-white rounded-lg shadow-sm p-4">
+      {/* Table with Pagination */}
+      <div className="overflow-x-auto rounded-lg bg-white p-4 shadow-sm space-y-4">
         <Table headers={headers} data={users} />
+        <Pagination
+          currentPage={currentPage}
+          totalItems={8432}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={(count) => {
+            setItemsPerPage(count);
+            setCurrentPage(1);
+          }}
+        />
       </div>
-
-      {/* Pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalItems={8432}
-        itemsPerPage={itemsPerPage}
-        onPageChange={setCurrentPage}
-        onItemsPerPageChange={(count) => {
-          setItemsPerPage(count);
-          setCurrentPage(1);
-        }}
-      />
     </div>
   );
 }
+

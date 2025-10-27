@@ -15,7 +15,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[var(--dashboard-bg)]">
       {/* Top Navigation */}
       <nav className="bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-md px-6 py-3 flex justify-between items-center">
         {/* Left: Title */}
@@ -48,7 +48,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       </nav>
 
       {/* Main Content */}
-      <main className="p-6">{children}</main>
+      <main className="p-10">{children}</main>
     </div>
   );
 }
