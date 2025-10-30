@@ -1,18 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useRef } from "react";
-import { User } from "../types/User";
-import UserRow from "./UserRow";
+import { useEffect, useRef, useState } from 'react';
+import { User } from '../types/User';
+import UserRow from './UserRow';
 
-export default function Table({
-  headers,
-  data,
-}: {
-  headers: string[];
-  data: User[];
-}) {
+export default function Table({ headers, data }: { headers: string[]; data: User[] }) {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isBulkOpen, setIsBulkOpen] = useState(false);
@@ -36,26 +30,24 @@ export default function Table({
         setIsBulkOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const toggleUser = (id: string) => {
-    setSelectedUsers((prev) =>
-      prev.includes(id) ? prev.filter((uid) => uid !== id) : [...prev, id]
-    );
+    setSelectedUsers(prev => (prev.includes(id) ? prev.filter(uid => uid !== id) : [...prev, id]));
   };
 
   const toggleAll = () => {
     if (selectedUsers.length === data.length) {
       setSelectedUsers([]);
     } else {
-      setSelectedUsers(data.map((u) => u.id));
+      setSelectedUsers(data.map(u => u.id));
     }
   };
 
   const filteredData = data.filter(
-    (user) =>
+    user =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -81,7 +73,7 @@ export default function Table({
             type="text"
             placeholder="Search users..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={e => setSearchTerm(e.target.value)}
             id="searchInput"
           />
         </div>
@@ -90,16 +82,8 @@ export default function Table({
         <div className="filter-buttons">
           {/* Sort */}
           <div className="dropdown" ref={sortRef}>
-            <button
-              className="button secondary-button"
-              onClick={() => setIsSortOpen(!isSortOpen)}
-            >
-              <svg
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                width={16}
-                height={16}
-              >
+            <button className="button secondary-button" onClick={() => setIsSortOpen(!isSortOpen)}>
+              <svg viewBox="0 0 16 16" fill="currentColor" width={16} height={16}>
                 <path
                   d="M1.75 12H1V10.5H1.75H5.25H6V12H5.25H1.75ZM1.75 7.75H1V6.25H1.75H4.25H5V7.75H4.25H1.75ZM1.75 3.5H1V2H1.75H7.25H8V3.5H7.25H1.75ZM12.5303 14.7803C12.2374 15.0732 11.7626 15.0732 11.4697 14.7803L9.21967 12.5303L8.68934 12L9.75 10.9393L10.2803 11.4697L11.25 12.4393V2.75V2H12.75V2.75V12.4393L13.7197 11.4697L14.25 10.9393L15.3107 12L14.7803 12.5303L12.5303 14.7803Z"
                   fillRule="evenodd"
@@ -108,10 +92,7 @@ export default function Table({
               </svg>
               Sort
             </button>
-            <div
-              className={`dropdown-menu ${isSortOpen ? "show" : ""}`}
-              id="sortDropdownMenu"
-            >
+            <div className={`dropdown-menu ${isSortOpen ? 'show' : ''}`} id="sortDropdownMenu">
               <div className="dropdown-item" data-sort="name-asc">
                 Full Name (A-Z)
               </div>
@@ -153,10 +134,7 @@ export default function Table({
               </svg>
               Filter
             </button>
-            <div
-              className={`dropdown-menu ${isFilterOpen ? "show" : ""}`}
-              id="filterDropdownMenu"
-            >
+            <div className={`dropdown-menu ${isFilterOpen ? 'show' : ''}`} id="filterDropdownMenu">
               <div className="dropdown-item" data-filter="status">
                 Status
               </div>
@@ -183,10 +161,7 @@ export default function Table({
 
           {/* ✅ Bulk Actions */}
           <div className="dropdown" ref={bulkRef}>
-            <button
-              className="button secondary-button"
-              onClick={() => setIsBulkOpen(!isBulkOpen)}
-            >
+            <button className="button secondary-button" onClick={() => setIsBulkOpen(!isBulkOpen)}>
               Bulk Actions
               <svg
                 viewBox="0 0 24 24"
@@ -196,71 +171,169 @@ export default function Table({
                 fill="none"
                 className="dropdown-arrow"
               >
-                <path
-                  d="M19 9l-7 7-7-7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                ></path>
+                <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round"></path>
               </svg>
             </button>
 
             {isBulkOpen && (
-              <div className="dropdown-menu show" style={{ width: "220px" }}>
+              <div className="dropdown-menu show" style={{ width: '220px' }}>
                 <div className="dropdown-item" data-action="suspend">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20 17.5C20.83 17.5 21.5 18.17 21.5 19S20.83 20.5 20 20.5S18.5 19.83 18.5 19S19.17 17.5 20 17.5Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20 22V20.5"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20 17.5V16"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20 17.5C20.83 17.5 21.5 18.17 21.5 19S20.83 20.5 20 20.5S18.5 19.83 18.5 19S19.17 17.5 20 17.5Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20 22V20.5"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20 17.5V16"
+                    />
                   </svg>
                   Suspend
                 </div>
 
                 <div className="dropdown-item" data-action="unsuspend">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                    />
                   </svg>
                   Unsuspend
                 </div>
 
                 <div className="dropdown-item" data-action="resend-verification">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M21 9v9a3 3 0 01-3 3H6a3 3 0 01-3-3V9"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M21 9l-7.66 6.48a2 2 0 01-2.68 0L3 9m2.5-2.03L3 9m18 0l-2.5-2.03"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 9v9a3 3 0 01-3 3H6a3 3 0 01-3-3V9"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 9l-7.66 6.48a2 2 0 01-2.68 0L3 9m2.5-2.03L3 9m18 0l-2.5-2.03"
+                    />
                   </svg>
                   Resend Verification Email
                 </div>
 
                 <div className="dropdown-item" data-action="change-role">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                    />
                   </svg>
                   Change Role
                 </div>
 
                 <div className="dropdown-item" data-action="enroll-products">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M21 14H14V21H21V14Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M10 14H3V21H10V14Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M21 3H14V10H21V3Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M10 3H3V10H10V3Z"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 14H14V21H21V14Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10 14H3V21H10V14Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 3H14V10H21V3Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10 3H3V10H10V3Z"
+                    />
                   </svg>
                   Enroll in Product(s)
                 </div>
 
                 <div className="dropdown-item" data-action="invite-spaces">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M18 7.16C17.94 7.15 17.87 7.15 17.81 7.16C16.43 7.11 15.33 5.98 15.33 4.58C15.33 3.15 16.48 2 17.91 2C19.34 2 20.49 3.16 20.49 4.58C20.48 5.98 19.38 7.11 18 7.16Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M16.9706 14.4402C18.3406 14.6702 19.8506 14.4302 20.9106 13.7202C22.3206 12.7802 22.3206 11.2402 20.9106 10.3002C19.8406 9.59016 18.3106 9.35016 16.9406 9.59016"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M18 7.16C17.94 7.15 17.87 7.15 17.81 7.16C16.43 7.11 15.33 5.98 15.33 4.58C15.33 3.15 16.48 2 17.91 2C19.34 2 20.49 3.16 20.49 4.58C20.48 5.98 19.38 7.11 18 7.16Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16.9706 14.4402C18.3406 14.6702 19.8506 14.4302 20.9106 13.7202C22.3206 12.7802 22.3206 11.2402 20.9106 10.3002C19.8406 9.59016 18.3106 9.35016 16.9406 9.59016"
+                    />
                   </svg>
                   Invite to Space(s)
                 </div>
 
                 <div className="dropdown-item" data-action="tags">
                   <svg viewBox="0 0 24 24" fill="none">
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M20.59 13.41L13.42 20.58C13.2343 20.766 13.0137 20.9135 12.7709 21.0141C12.5281 21.1148 12.2678 21.1666 12.005 21.1666C11.7422 21.1666 11.4819 21.1148 11.2391 21.0141C10.9963 20.9135 10.7757 20.766 10.59 20.58L2 12V2H12L20.59 10.59C20.9625 10.9647 21.1716 11.4716 21.1716 12C21.1716 12.5284 20.9625 13.0353 20.59 13.41V13.41Z"/>
-                    <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M7 7H7.01"/>
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.59 13.41L13.42 20.58C13.2343 20.766 13.0137 20.9135 12.7709 21.0141C12.5281 21.1148 12.2678 21.1666 12.005 21.1666C11.7422 21.1666 11.4819 21.1148 11.2391 21.0141C10.9963 20.9135 10.7757 20.766 10.59 20.58L2 12V2H12L20.59 10.59C20.9625 10.9647 21.1716 11.4716 21.1716 12C21.1716 12.5284 20.9625 13.0353 20.59 13.41V13.41Z"
+                    />
+                    <path
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7 7H7.01"
+                    />
                   </svg>
                   Add/Remove Tags
                 </div>
@@ -274,7 +347,9 @@ export default function Table({
       <table className="min-w-full table-auto border-separate border-spacing-y-3">
         <thead className="bg-[var(--secondary-bg)] text-[var(--menu-text)] uppercase text-xs">
           <tr>
-            <th className="px-4 py-3">
+            <th className="px-4 py-3 w-12">
+              {' '}
+              {/* Added fixed width */}
               <input
                 type="checkbox"
                 checked={selectedUsers.length === filteredData.length}
@@ -290,7 +365,7 @@ export default function Table({
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((user) => (
+          {filteredData.map(user => (
             <UserRow
               key={user.id}
               user={user}
