@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 import "./globals.css";
 import { ReactNode } from "react";
 import Navbar from "./components/Navbar";
@@ -12,13 +11,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100 min-h-screen">
-        {/* Wrap all pages in TopNavLayout */}
-        <Navbar>
-          {children}
-        </Navbar>
-
-        {/* Global toast notifications */}
+      <body>
+        
+        <Navbar>{children}</Navbar>
         <Toaster position="top-right" />
       </body>
     </html>

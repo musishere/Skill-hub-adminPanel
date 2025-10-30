@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
-import { UserIcon, CheckCircleIcon, AcademicCapIcon, UserGroupIcon, ExclamationCircleIcon } from "@heroicons/react/24/solid";
 export default function Home() {
-  // Redirect to /users page
-  redirect("/users");
+  return (
+    <main style={{ padding: "2rem" }}>
+      <h1>Welcome to Skillhub Admin Panel</h1>
+      <p>Select a section (like Collections or Users) from the sidebar.</p>
+    </main>
+  );
 }
