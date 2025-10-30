@@ -1,19 +1,18 @@
-import "./globals.css";
-import { ReactNode } from "react";
-import Navbar from "./components/Navbar";
-import { Toaster } from "react-hot-toast";
+import { ReactNode } from 'react';
+import { Toaster } from 'react-hot-toast';
+import Layout from './components/Layout';
+import './globals.css';
 
 export const metadata = {
-  title: "SkillHub Admin",
-  description: "Admin Panel",
+  title: 'SkillHub Admin',
+  description: 'Admin Panel',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        
-        <Navbar>{children}</Navbar>
+        <Layout>{children}</Layout>
         <Toaster position="top-right" />
       </body>
     </html>

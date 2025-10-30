@@ -1,4 +1,4 @@
-@import "./theme.css";
+@import './theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,6 +33,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --dashboard-bg: #f8fcff;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -59,10 +60,9 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --dashboard-bg: #0f1729;
   }
 }
-
-
 
 @layer base {
   * {
@@ -70,5 +70,25 @@
   }
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
   }
+}
+
+/* Custom scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }
